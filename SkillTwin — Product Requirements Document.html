@@ -1,0 +1,608 @@
+!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+</head><body>
+<h1>SkillTwin — Product Requirements Document</h1>
+<p><strong>Version:</strong> 1.0 (Hackathon MVP) · <strong>Date:</strong> 29 Sep 2026 · <strong>Status:</strong> Draft</p>
+<hr>
+<h2>1. Overview</h2>
+<p><strong>Product:</strong> SkillTwin — an evidence-based skill intelligence and placement platform connecting students, academicians, industries and institutions.</p>
+<p><strong>One-liner:</strong> Turn a static resume into a living, evidence-backed skill profile (the <em>SkillTwin</em>) that shows what students claim, what they can demonstrate, what industry needs, and what to improve.</p>
+<p><strong>Core loop:</strong> Claim → Verify → Map → Gap → Improve → Re-verify → Match</p>
+<h2>2. Problem Statement</h2>
+<ul>
+<li>Resume skills are unverified; companies filter by keywords and eligibility.</li>
+<li>Tests, technical interviews and HR rounds are disconnected from each other and from the student's profile.</li>
+<li>Students get selected or rejected without learning <em>why</em>.</li>
+<li>Colleges see placement outcomes but not the skill gaps behind them.</li>
+<li>Industry needs change faster than curricula.</li>
+<li>Internships and projects are not converted into structured skill evidence.</li>
+</ul>
+<h2>3. Goals and Non-Goals</h2>
+<h3>Goals</h3>
+<ol>
+<li>Build a verified, evolving Skill DNA per student from multiple evidence sources.</li>
+<li>Let industry define measurable role blueprints and match against verified skills.</li>
+<li>Surface transparent, explainable skill gaps at student and batch level.</li>
+<li>Support an improvement loop (train → reassess → updated score and match).</li>
+<li>Keep all critical scoring deterministic and reproducible.</li>
+</ol>
+<h3>Non-Goals (MVP)</h3>
+<p>Video conferencing, facial/emotion/biometric analysis, blockchain certificates, mobile app, real company integrations, complex recommendation algorithms, large question banks, real-time messaging, microservices/Kubernetes, advanced auth, multiple AI providers, automated hiring decisions.</p>
+<h2>4. Users and Personas</h2>
+<table>
+<thead>
+<tr>
+<th>Persona</th>
+<th>Needs</th>
+<th>Key outcomes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Student</strong></td>
+<td>Know true skill level, get actionable gaps, build evidence</td>
+<td>Higher placement readiness over time</td>
+</tr>
+<tr>
+<td><strong>Academician</strong></td>
+<td>See batch-level gaps, plan interventions, track improvement</td>
+<td>Targeted training, measurable impact</td>
+</tr>
+<tr>
+<td><strong>Industry user</strong></td>
+<td>Define role requirements, discover candidates by verified evidence</td>
+<td>Better shortlists, less keyword dependence</td>
+</tr>
+<tr>
+<td><strong>Institution admin</strong></td>
+<td>Monitor department/batch readiness and trends</td>
+<td>Academia–industry feedback loop</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Key Concepts</h2>
+<ul>
+<li><strong>SkillTwin:</strong> the continuously updated profile combining claims, demonstrated evidence, industry requirements and improvement needs.</li>
+<li><strong>Skill DNA:</strong> visual per-skill scores (technical, problem solving, soft skills), each with linked evidence.</li>
+<li><strong>Verification status:</strong> 🟢 Verified · 🟡 Self-declared · 🔴 Skill gap.</li>
+<li><strong>Industry Skill Blueprint:</strong> required proficiency score per skill for a role.</li>
+<li><strong>Skill Gap Engine:</strong> rule-based comparison of verified Skill DNA vs. blueprint.</li>
+<li><strong>Placement Readiness:</strong> weighted overall score across evidence stages.</li>
+</ul>
+<h2>6. Functional Requirements</h2>
+<p>Priority: <strong>P0</strong> = must ship in MVP, <strong>P1</strong> = should, <strong>P2</strong> = later.</p>
+<h3>6.1 Registration and Profile</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-1</td>
+<td>Student registers with name, department, year, education, projects, certifications, internships</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-2</td>
+<td>Role-based accounts: student, academician, industry, institution admin</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-3</td>
+<td>Simple login (basic auth is sufficient for MVP)</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h3>6.2 Resume Upload and Extraction</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-4</td>
+<td>Upload PDF resume; extract text (PyMuPDF/pdfplumber)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-5</td>
+<td>LLM extracts skills, languages, tools, projects, certifications, internships, education into structured JSON</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-6</td>
+<td>Normalize extracted skills against a <strong>predefined skill dictionary</strong> (e.g., &quot;Object Oriented Programming&quot; → OOP); unmapped terms are discarded or flagged, never added automatically</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-7</td>
+<td>Extracted skills are stored as <em>self-declared</em> with claimed level</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-8</td>
+<td>Student can review and edit extraction results</td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h3>6.3 Skill Verification and Skill DNA</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-9</td>
+<td>Convert assessment scores to proficiency levels via fixed thresholds (e.g., &lt;50 Basic, 50–74 Intermediate, ≥75 Advanced — configurable)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-10</td>
+<td>Show claim vs. assessment vs. verified level per skill</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-11</td>
+<td>Skill DNA visualization grouped into Technical, Problem Solving, Soft Skills</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-12</td>
+<td>Every score links to its evidence (resume, test, interview, project, internship)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-13</td>
+<td>Skill score aggregation rule across evidence sources is documented and deterministic</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h3>6.4 Industry Skill Blueprint</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-14</td>
+<td>Industry user creates a role with company, role name and skill → required score pairs</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-15</td>
+<td>Seed at least one role (Software Developer Intern: Java 70, DSA 65, SQL 60, Git 50, OOP 65, Problem Solving 65, Communication 60)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-16</td>
+<td>Edit/clone roles</td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h3>6.5 Skill Gap Engine</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-17</td>
+<td>Compare student's verified scores to blueprint; classify each skill as met/gap</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-18</td>
+<td>Output critical gaps, strong areas, and a role match score (e.g., weighted share of requirements met)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-19</td>
+<td>Show the calculation transparently (per-skill required vs. actual)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-20</td>
+<td>Gap-prioritized assessment recommendations</td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h3>6.6 Online Assessment</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-21</td>
+<td>Question bank with metadata: question ID, skill, topic, difficulty, marks</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-22</td>
+<td>Assessment prioritizes questions from the student's gap skills</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-23</td>
+<td>Results update skill and topic-level scores (e.g., DSA: Arrays 70%, Searching 55%, Sorting 40%)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-24</td>
+<td>MVP question bank: small (~30–50 MCQ/short questions across 4–5 skills)</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h3>6.7 Technical Interview</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-25</td>
+<td>Structured questions tagged with skill, topic, difficulty and rubric</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-26</td>
+<td>Rubric-based scoring (e.g., correctness 40%, depth 30%, example 20%, clarity 10%)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-27</td>
+<td>LLM may score free-text against the rubric and return structured JSON; system clamps to rubric bounds and computes the final score</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h3>6.8 HR Interview and Soft Skills</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-28</td>
+<td>Scenario-based HR questions evaluated on professionalism, decision making, communication, teamwork</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-29</td>
+<td>Scenario-based soft-skill assessment (communication, teamwork, leadership, problem solving, adaptability) with structured scoring; no &quot;personality detection&quot;</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h3>6.9 Placement Readiness</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-30</td>
+<td>Overall readiness score from weighted components: resume evidence, technical skills, coding assessment, technical interview, HR assessment, soft skills</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-31</td>
+<td>Show top strengths, priority gaps and recommended actions</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h3>6.10 Improvement Loop and History</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-32</td>
+<td>Store every score change in skill history (old score, new score, date)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-33</td>
+<td>Student can retake assessments; SkillTwin and role match update</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-34</td>
+<td>Progress chart showing before/after (e.g., DSA 42% → 68%, match 61% → 74%)</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table>
+<h3>6.11 Academia and Institution Dashboards</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-35</td>
+<td>Batch view: student count, Industry Ready / Needs Development / Critical Gaps</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-36</td>
+<td>Common skill-gap ranking across a batch (% of students below threshold per skill)</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-37</td>
+<td>Filter by department, year, role</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>FR-38</td>
+<td>Compare industry demand vs. student skill distribution; reassessment trend after intervention</td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h3>6.12 Industry Dashboard</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-39</td>
+<td>View ranked matched candidates for a role with match score</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-40</td>
+<td>Candidate detail: verified skills, evidence sources, gaps</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>FR-41</td>
+<td>Filter by skill thresholds; shortlist candidates</td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h3>6.13 Internship Evidence</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-42</td>
+<td>Record internship with mentor-verified skills that feed into SkillTwin as evidence</td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h2>7. Controlled AI Requirements</h2>
+<p><strong>AI is used for:</strong> resume parsing, skill normalization, assistance evaluating free-text interview answers against fixed rubrics.</p>
+<p><strong>AI is not used for:</strong> final placement decisions, candidate ranking logic, personality diagnosis, predicting job outcomes, inventing skills, inventing company requirements, judging intelligence, opaque decisions.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI-1</td>
+<td>All AI outputs must be structured JSON validated against a schema before use</td>
+</tr>
+<tr>
+<td>AI-2</td>
+<td>Skills must map to the predefined dictionary; unknown skills are rejected</td>
+</tr>
+<tr>
+<td>AI-3</td>
+<td>Rubric criteria, weights and score bounds are defined by the system, not the model</td>
+</tr>
+<tr>
+<td>AI-4</td>
+<td>Final scores, match scores and readiness are computed by deterministic code</td>
+</tr>
+<tr>
+<td>AI-5</td>
+<td>If AI fails or returns invalid output, fall back to manual entry / keyword matching</td>
+</tr>
+<tr>
+<td>AI-6</td>
+<td>Store AI-assisted scores with a flag so they are distinguishable in evidence</td>
+</tr>
+</tbody>
+</table>
+<h2>8. Scoring Logic (MVP defaults)</h2>
+<ul>
+<li><strong>Verified skill score:</strong> weighted combination of available evidence (assessment, interview, project/internship). If no assessment exists, status stays <em>self-declared</em> and claimed level maps to a provisional score that is visibly marked unverified.</li>
+<li><strong>Role match score:</strong> sum over blueprint skills of <code>min(student_score / required_score, 1) × skill_weight</code>, divided by total weight (equal weights by default).</li>
+<li><strong>Readiness bands:</strong> ≥75 Industry Ready · 50–74 Needs Development · &lt;50 Critical Gaps (configurable).</li>
+<li>All formulas and thresholds live in one config module and are displayed in the UI where relevant.</li>
+</ul>
+<h2>9. Primary User Journey (Demo Flow)</h2>
+<ol>
+<li>Student uploads resume → skills extracted → Skill DNA (self-declared).</li>
+<li>Industry role selected (Software Developer Intern) → blueprint shown.</li>
+<li>Gap Engine compares student vs. blueprint → critical gaps identified.</li>
+<li>Student takes gap-prioritized online test → technical interview → HR/soft-skill assessment.</li>
+<li>Skill DNA updates to verified; placement readiness computed.</li>
+<li>Institution dashboard shows batch skill gaps.</li>
+<li>Industry dashboard shows matched candidates with evidence.</li>
+<li>Reassessment shows improvement (skill history chart).</li>
+</ol>
+<h2>10. Data Model</h2>
+<p>Core tables: <code>users</code>, <code>students</code>, <code>skills</code> (id, name, category), <code>student_skills</code> (student_id, skill_id, score, verification_status), <code>skill_evidence</code> (student_id, skill_id, source, score, ai_assisted, timestamp), <code>industry_roles</code>, <code>role_skills</code> (role_id, skill_id, required_score), <code>assessments</code>, <code>questions</code> (skill, topic, difficulty, marks), <code>assessment_results</code>, <code>interviews</code> (student_id, type, rubric scores, result), <code>internships</code>, <code>skill_history</code> (student_id, skill_id, old_score, new_score, date).</p>
+<h2>11. Technical Architecture</h2>
+<ul>
+<li><strong>Frontend:</strong> Next.js, TypeScript, Tailwind CSS, Recharts.</li>
+<li><strong>Backend:</strong> Python, FastAPI, modular services: Resume, Skill Engine, Assessment, Interview, Matching, Placement.</li>
+<li><strong>Database:</strong> PostgreSQL (SQLite for prototype).</li>
+<li><strong>AI layer:</strong> single LLM provider called only from the backend; JSON-schema validated.</li>
+<li><strong>Resume processing:</strong> PyMuPDF / pdfplumber for text extraction.</li>
+<li><strong>Interface:</strong> REST + JSON.</li>
+</ul>
+<h2>12. Non-Functional Requirements</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explainability</td>
+<td>Every score and match shows its inputs and formula</td>
+</tr>
+<tr>
+<td>Reproducibility</td>
+<td>Same inputs always yield the same scores (excluding raw AI rubric inputs, which are stored)</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Dashboards load in &lt;3s on demo data; resume extraction &lt;15s</td>
+</tr>
+<tr>
+<td>Privacy</td>
+<td>Students' data visible to industry only for roles/opportunities they participate in; role-based access control</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>Graceful fallback when AI is unavailable</td>
+</tr>
+<tr>
+<td>Usability</td>
+<td>Clear, chart-driven dashboards; responsive desktop web</td>
+</tr>
+</tbody>
+</table>
+<h2>13. Success Metrics</h2>
+<p><strong>Hackathon:</strong> end-to-end journey runs live without failure; visible skill improvement (e.g., DSA 42% → 68%); judges can see evidence behind every score.</p>
+<p><strong>Product (post-MVP):</strong></p>
+<ul>
+<li>% of self-declared skills converted to verified</li>
+<li>Average skill-score improvement after reassessment</li>
+<li>Reduction in batch-level critical gap share after interventions</li>
+<li>Recruiter shortlist time and precision</li>
+<li>Students completing full assessment pipeline</li>
+</ul>
+<h2>14. MVP Scope and Milestones</h2>
+<p><strong>Must demo (P0):</strong> registration, resume extraction, skill dictionary normalization, Skill DNA, one role blueprint, Gap Engine, online test, technical interview, HR/soft-skill assessment, placement readiness, skill history, institution dashboard, industry candidate view. Use seeded data for ~20–30 sample students to make batch analytics meaningful.</p>
+<p><strong>Suggested build order:</strong></p>
+<ol>
+<li>Data model, skill dictionary, seed data</li>
+<li>Skill Engine + Gap Engine (deterministic core)</li>
+<li>Resume upload/extraction</li>
+<li>Assessment + interview engines</li>
+<li>Student dashboard (Skill DNA, readiness)</li>
+<li>Institution and industry dashboards</li>
+<li>Reassessment/history chart and demo polish</li>
+</ol>
+<h2>15. Risks and Mitigations</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM extraction errors</td>
+<td>Dictionary-constrained mapping, schema validation, student review step</td>
+</tr>
+<tr>
+<td>Free-text scoring inconsistency</td>
+<td>Fixed rubric, bounded scores, AI flag, manual override</td>
+</tr>
+<tr>
+<td>Small question bank limits credibility</td>
+<td>Focus on 4–5 skills with quality metadata; state scalability plan</td>
+</tr>
+<tr>
+<td>Time constraints</td>
+<td>Strict P0 scope; seed data; avoid non-goals</td>
+</tr>
+<tr>
+<td>Bias/fairness concerns in matching</td>
+<td>Rule-based scoring, no personality inference, visible evidence</td>
+</tr>
+<tr>
+<td>Score gaming (retakes)</td>
+<td>Randomized question selection, attempt history, cooldown (P1)</td>
+</tr>
+</tbody>
+</table>
+<h2>16. Open Questions</h2>
+<ol>
+<li>Exact weighting between evidence sources when they conflict?</li>
+<li>Should industries see students by default or only those who opt in?</li>
+<li>How are mentor verifications authenticated for internships?</li>
+<li>Who owns and reviews the question bank and skill dictionary long term?</li>
+<li>Should thresholds differ by role or department?</li>
+</ol>
+<h2>17. Future Roadmap</h2>
+<p>Larger adaptive question banks, company/LMS integrations, mentor verification workflow, curriculum-mapping recommendations, training-effectiveness analytics, mobile app, stronger authentication and audit trails.</p>
+
+</body></html>
