@@ -23,23 +23,23 @@ export function StatCard({
   className = ''
 }: StatCardProps) {
   return (
-    <div className={`glass-panel p-5 rounded-xl border border-gray-800 flex flex-col justify-between ${className}`}>
+    <div className={`bg-white p-5 rounded-2xl border border-[#E7E2D9] shadow-sm flex flex-col justify-between transition-all hover:border-[#DDD6CA] hover:shadow-md ${className}`}>
       <div className="flex justify-between items-start mb-2">
-        <span className="text-xs font-medium uppercase tracking-wider text-gray-400">{title}</span>
-        {icon && <div className="text-gray-400 p-2 rounded-lg bg-gray-800/60 border border-gray-700/40">{icon}</div>}
+        <span className="text-[11px] font-mono font-medium uppercase tracking-[0.16em] text-[#78716C]">{title}</span>
+        {icon && <div className="text-[#57534E] p-2 rounded-xl bg-[#FAF8F5] border border-[#E7E2D9]">{icon}</div>}
       </div>
       <div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-white tracking-tight">{value}</span>
+        <div className="flex items-baseline gap-2.5">
+          <span className="text-3xl font-extrabold text-[#18181B] tracking-tight">{value}</span>
           {badge}
         </div>
-        {subtitle && <p className="text-xs text-gray-400 mt-1">{subtitle}</p>}
+        {subtitle && <p className="text-xs text-[#78716C] mt-1 leading-relaxed">{subtitle}</p>}
         {trend && (
-          <div className="mt-2 flex items-center text-xs">
-            <span className={trend.isPositive ? 'text-emerald-400 font-semibold' : 'text-rose-400 font-semibold'}>
+          <div className="mt-2.5 flex items-center text-xs">
+            <span className={trend.isPositive ? 'text-[#24482B] font-semibold bg-[#EDF3EE] px-1.5 py-0.5 rounded border border-[#CFDEC2]' : 'text-[#B0432E] font-semibold bg-[#FDF1EE] px-1.5 py-0.5 rounded border border-[#F4CDC4]'}>
               {trend.isPositive ? '↑' : '↓'} {trend.value}
             </span>
-            <span className="text-gray-400 ml-1.5">vs baseline</span>
+            <span className="text-[#78716C] ml-2 text-[11px]">vs cohort benchmark</span>
           </div>
         )}
       </div>

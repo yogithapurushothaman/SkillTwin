@@ -8,21 +8,21 @@ interface BadgeProps {
 }
 
 export function Badge({ children, variant = 'neutral', size = 'sm' }: BadgeProps) {
-  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-2.5 py-1 text-sm';
+  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs';
   
   const variantClasses = {
-    verified: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
-    self_declared: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
-    gap: 'bg-rose-500/15 text-rose-400 border border-rose-500/30',
-    success: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
-    warning: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
-    danger: 'bg-rose-500/15 text-rose-400 border border-rose-500/30',
-    info: 'bg-indigo-500/15 text-indigo-400 border border-indigo-500/30',
-    neutral: 'bg-gray-800 text-gray-300 border border-gray-700'
+    verified: 'bg-[#EDF3EE] text-[#24482B] border border-[#CFDEC2]',
+    self_declared: 'bg-[#FBF6EC] text-[#8A5C1E] border border-[#E9DFCE]',
+    gap: 'bg-[#FDF1EE] text-[#B0432E] border border-[#F4CDC4]',
+    success: 'bg-[#EDF3EE] text-[#24482B] border border-[#CFDEC2]',
+    warning: 'bg-[#FBF6EC] text-[#8A5C1E] border border-[#E9DFCE]',
+    danger: 'bg-[#FDF1EE] text-[#B0432E] border border-[#F4CDC4]',
+    info: 'bg-[#F2EFE9] text-[#44403C] border border-[#DDD6CA]',
+    neutral: 'bg-[#FAF8F5] text-[#57534E] border border-[#E7E2D9]'
   };
 
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full font-medium ${sizeClasses} ${variantClasses[variant]}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full font-medium tracking-tight ${sizeClasses} ${variantClasses[variant]}`}>
       {children}
     </span>
   );
@@ -32,7 +32,7 @@ export function StatusBadge({ status }: { status: VerificationStatus | string })
   if (status === 'verified') {
     return (
       <Badge variant="verified">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+        <span className="w-1.5 h-1.5 rounded-full bg-[#4E6554] inline-block"></span>
         Verified Evidence
       </Badge>
     );
@@ -40,14 +40,14 @@ export function StatusBadge({ status }: { status: VerificationStatus | string })
   if (status === 'self_declared') {
     return (
       <Badge variant="self_declared">
-        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block"></span>
+        <span className="w-1.5 h-1.5 rounded-full bg-[#B47D1C] inline-block"></span>
         Self-Declared
       </Badge>
     );
   }
   return (
     <Badge variant="gap">
-      <span className="w-1.5 h-1.5 rounded-full bg-rose-400 inline-block"></span>
+      <span className="w-1.5 h-1.5 rounded-full bg-[#D46238] inline-block"></span>
       Skill Gap
     </Badge>
   );
@@ -56,21 +56,24 @@ export function StatusBadge({ status }: { status: VerificationStatus | string })
 export function ReadinessBandBadge({ band }: { band: string }) {
   if (band.toLowerCase().includes('ready')) {
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
-        🟢 Industry Ready (≥75%)
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#EDF3EE] text-[#24482B] border border-[#CFDEC2]">
+        <span className="w-2 h-2 rounded-full bg-[#4E6554]"></span>
+        Industry Ready (≥75%)
       </span>
     );
   }
-  if (band.toLowerCase().includes('development')) {
+  if (band.toLowerCase().includes('needs') || band.toLowerCase().includes('development')) {
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/40">
-        🟡 Needs Development (50–74%)
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FBF6EC] text-[#8A5C1E] border border-[#E9DFCE]">
+        <span className="w-2 h-2 rounded-full bg-[#B47D1C]"></span>
+        Needs Development (50-74%)
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-400 border border-rose-500/40">
-      🔴 Critical Gaps (&lt;50%)
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#FDF1EE] text-[#B0432E] border border-[#F4CDC4]">
+      <span className="w-2 h-2 rounded-full bg-[#D46238]"></span>
+      Critical Gaps (&lt;50%)
     </span>
   );
 }

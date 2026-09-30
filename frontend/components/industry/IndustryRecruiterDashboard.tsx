@@ -56,28 +56,28 @@ export function IndustryRecruiterDashboard({
   return (
     <div className="space-y-6">
       {/* Top Banner & Filters */}
-      <div className="glass-panel p-6 rounded-2xl border border-gray-800">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-5 border-b border-gray-800">
+      <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#E7E2D9] shadow-xs">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-5 border-b border-[#E7E2D9]">
           <div>
             <div className="flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-amber-400" />
-              <h3 className="text-xl font-bold text-white">Recruiter Talent Discovery & Matching</h3>
-              <span className="px-2 py-0.5 rounded-full text-xs bg-amber-500/20 text-amber-400 font-semibold border border-amber-500/30">
-                FR-39 & FR-41
+              <Briefcase className="w-5 h-5 text-[#D46238]" />
+              <h3 className="text-xl font-bold text-[#18181B]">Recruiter Talent Discovery & Matching</h3>
+              <span className="px-2.5 py-0.5 rounded-full text-xs bg-[#FAF8F5] text-[#18181B] font-mono border border-[#E7E2D9]">
+                Verifiable
               </span>
             </div>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-[#78716C] mt-1">
               Evidence-based candidate matching. Candidates ranked strictly by blueprint verification, not unverified resume claims.
             </p>
           </div>
 
           {/* Role Blueprint Selector */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400">Target Role:</span>
+            <span className="text-xs text-[#78716C] font-mono">Target Role:</span>
             <select
               value={selectedRoleId || ''}
               onChange={e => setSelectedRoleId(parseInt(e.target.value, 10))}
-              className="bg-gray-900 border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
+              className="bg-[#FAF8F5] border border-[#DDD6CA] rounded-lg px-3 py-1.5 text-xs text-[#18181B] font-semibold focus:outline-none focus:border-[#18181B] cursor-pointer"
             >
               {blueprints.map(r => (
                 <option key={r.id} value={r.id}>
@@ -88,12 +88,12 @@ export function IndustryRecruiterDashboard({
           </div>
         </div>
 
-        {/* Filter Sliders & Controls (FR-41) */}
+        {/* Filter Sliders & Controls */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-5">
-          <div className="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 space-y-1">
+          <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E7E2D9] space-y-1.5">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-gray-400 font-medium">Min Role Match Score</span>
-              <span className="font-bold text-indigo-400">{minMatch}%</span>
+              <span className="text-[#78716C] font-medium font-mono">Min Role Match Score</span>
+              <span className="font-bold font-mono text-[#D46238]">{minMatch}%</span>
             </div>
             <input
               type="range"
@@ -102,14 +102,14 @@ export function IndustryRecruiterDashboard({
               step={5}
               value={minMatch}
               onChange={e => setMinMatch(parseInt(e.target.value, 10))}
-              className="w-full accent-indigo-500 cursor-pointer"
+              className="w-full accent-[#D46238] cursor-pointer"
             />
           </div>
 
-          <div className="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 space-y-1">
+          <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E7E2D9] space-y-1.5">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-gray-400 font-medium">Min Placement Readiness</span>
-              <span className="font-bold text-emerald-400">{minReadiness}%</span>
+              <span className="text-[#78716C] font-medium font-mono">Min Placement Readiness</span>
+              <span className="font-bold font-mono text-[#24482B]">{minReadiness}%</span>
             </div>
             <input
               type="range"
@@ -118,39 +118,39 @@ export function IndustryRecruiterDashboard({
               step={5}
               value={minReadiness}
               onChange={e => setMinReadiness(parseInt(e.target.value, 10))}
-              className="w-full accent-emerald-500 cursor-pointer"
+              className="w-full accent-[#24482B] cursor-pointer"
             />
           </div>
 
-          <div className="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E7E2D9] flex items-center justify-between">
             <div className="text-xs">
-              <span className="text-gray-400 block font-medium">Filter by Department</span>
+              <span className="text-[#78716C] block font-medium font-mono">Department</span>
               <select
                 value={department}
                 onChange={e => setDepartment(e.target.value)}
-                className="bg-transparent text-white font-semibold focus:outline-none cursor-pointer mt-1"
+                className="bg-transparent text-[#18181B] font-bold focus:outline-none cursor-pointer mt-1"
               >
-                <option value="All" className="bg-gray-900">All Departments</option>
-                <option value="Computer Science & Engineering" className="bg-gray-900">CSE</option>
-                <option value="Information Technology" className="bg-gray-900">IT</option>
-                <option value="AI & Data Science" className="bg-gray-900">AI & DS</option>
-                <option value="Electronics & Communication" className="bg-gray-900">ECE</option>
+                <option value="All">All Departments</option>
+                <option value="Computer Science & Engineering">CSE</option>
+                <option value="Information Technology">IT</option>
+                <option value="AI & Data Science">AI & DS</option>
+                <option value="Electronics & Communication">ECE</option>
               </select>
             </div>
 
-            <div className="flex bg-gray-800 p-0.5 rounded-lg border border-gray-700">
+            <div className="flex bg-white p-1 rounded-lg border border-[#DDD6CA]">
               <button
                 onClick={() => setActiveTab('all')}
-                className={`px-2.5 py-1 rounded text-xs font-semibold ${
-                  activeTab === 'all' ? 'bg-indigo-600 text-white' : 'text-gray-400'
+                className={`px-3 py-1 rounded text-xs font-semibold cursor-pointer ${
+                  activeTab === 'all' ? 'bg-[#18181B] text-white shadow-xs' : 'text-[#78716C]'
                 }`}
               >
                 All ({candidates.length})
               </button>
               <button
                 onClick={() => setActiveTab('shortlisted')}
-                className={`px-2.5 py-1 rounded text-xs font-semibold ${
-                  activeTab === 'shortlisted' ? 'bg-indigo-600 text-white' : 'text-gray-400'
+                className={`px-3 py-1 rounded text-xs font-semibold cursor-pointer ${
+                  activeTab === 'shortlisted' ? 'bg-[#18181B] text-white shadow-xs' : 'text-[#78716C]'
                 }`}
               >
                 Starred
@@ -161,36 +161,36 @@ export function IndustryRecruiterDashboard({
       </div>
 
       {/* Candidate List (FR-39) */}
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         {loading ? (
-          <div className="glass-panel p-8 rounded-2xl border border-gray-800 text-center">
-            <Search className="w-8 h-8 text-indigo-400 mx-auto animate-pulse mb-3" />
-            <p className="text-xs text-gray-400">Filtering candidates...</p>
+          <div className="bg-white p-12 rounded-2xl border border-[#E7E2D9] text-center shadow-xs">
+            <Search className="w-8 h-8 text-[#D46238] mx-auto animate-pulse mb-3" />
+            <p className="text-xs text-[#78716C]">Filtering candidates against role blueprint...</p>
           </div>
         ) : displayedCandidates.length === 0 ? (
-          <div className="glass-panel p-8 rounded-2xl border border-gray-800 text-center text-xs text-gray-400">
+          <div className="bg-white p-12 rounded-2xl border border-[#E7E2D9] text-center text-xs text-[#78716C] shadow-xs">
             No candidates meet the active threshold filters. Try reducing the minimum match or readiness score.
           </div>
         ) : (
           displayedCandidates.map(c => (
             <div
               key={c.student_id}
-              className="glass-panel glass-panel-hover p-5 rounded-2xl border border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+              className="bg-white p-5 sm:p-6 rounded-2xl border border-[#E7E2D9] hover:border-[#DDD6CA] hover:shadow-md transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xs"
             >
               {/* Left Profile Info */}
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <h4 className="text-base font-bold text-white">{c.student_name}</h4>
+                  <h4 className="text-base font-bold text-[#18181B]">{c.student_name}</h4>
                   <ReadinessBandBadge band={c.readiness_band} />
-                  <span className="text-xs text-gray-400 font-mono">CGPA: {c.cgpa}</span>
+                  <span className="text-xs text-[#78716C] font-mono">CGPA: {c.cgpa}</span>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-gray-400">
-                  <span className="flex items-center gap-1">
-                    <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
+                <div className="flex items-center gap-3 text-xs text-[#78716C]">
+                  <span className="flex items-center gap-1 font-mono">
+                    <GraduationCap className="w-3.5 h-3.5 text-[#D46238]" />
                     {c.department} ({c.year} Batch)
                   </span>
                   <span>·</span>
-                  <span className="text-emerald-400 font-medium">
+                  <span className="text-[#24482B] font-medium font-mono">
                     {c.verified_skills_count} verified skills
                   </span>
                 </div>
@@ -200,14 +200,14 @@ export function IndustryRecruiterDashboard({
                   {c.top_verified_skills.map((ts, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 rounded text-[11px] bg-gray-900 border border-gray-700/80 text-gray-200"
+                      className="px-2.5 py-0.5 rounded-full text-[11px] bg-[#FAF8F5] border border-[#E7E2D9] text-[#18181B]"
                     >
-                      <strong className="text-white">{ts.name}:</strong>{' '}
-                      <span className="text-emerald-400">{ts.score}%</span>
+                      <strong className="font-semibold">{ts.name}:</strong>{' '}
+                      <span className="text-[#24482B] font-bold font-mono">{ts.score}%</span>
                     </span>
                   ))}
                   {c.critical_gaps.length > 0 && (
-                    <span className="px-2 py-0.5 rounded text-[11px] bg-rose-500/10 border border-rose-500/30 text-rose-400">
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] bg-[#FDF1EE] border border-[#F4CDC4] text-[#B0432E] font-mono">
                       Gaps: {c.critical_gaps.join(', ')}
                     </span>
                   )}
@@ -217,11 +217,11 @@ export function IndustryRecruiterDashboard({
               {/* Right Scores & Shortlist Button */}
               <div className="flex items-center gap-4 self-end md:self-center">
                 <div className="text-right">
-                  <span className="text-[10px] text-gray-400 block uppercase font-bold tracking-wider">
-                    Role Match Score
+                  <span className="text-[10px] text-[#78716C] block uppercase font-mono tracking-wider">
+                    Role Match
                   </span>
-                  <span className="text-2xl font-black text-emerald-400">{c.match_score}%</span>
-                  <span className="block text-[10px] text-gray-400">
+                  <span className="text-3xl font-black text-[#24482B] tracking-tight">{c.match_score}%</span>
+                  <span className="block text-[11px] text-[#78716C] font-mono">
                     Readiness: {c.readiness_score}%
                   </span>
                 </div>
@@ -229,20 +229,20 @@ export function IndustryRecruiterDashboard({
                 {/* Shortlist Toggle */}
                 <button
                   onClick={() => toggleShortlist(c.student_id)}
-                  className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
+                  className={`p-2.5 rounded-lg border transition-all cursor-pointer ${
                     c.is_shortlisted
-                      ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-md'
-                      : 'bg-gray-800/80 border-gray-700 text-gray-400 hover:text-white hover:bg-gray-700'
+                      ? 'bg-[#FBF6EC] border-[#E9DFCE] text-[#8A5C1E] shadow-xs'
+                      : 'bg-[#FAF8F5] border-[#DDD6CA] text-[#78716C] hover:text-[#18181B] hover:bg-white'
                   }`}
                   title={c.is_shortlisted ? 'Candidate Shortlisted' : 'Shortlist Candidate'}
                 >
-                  <Star className={`w-4 h-4 ${c.is_shortlisted ? 'fill-amber-400 text-amber-400' : ''}`} />
+                  <Star className={`w-4 h-4 ${c.is_shortlisted ? 'fill-[#B47D1C] text-[#B47D1C]' : ''}`} />
                 </button>
 
                 {/* Inspect candidate detail */}
                 <button
                   onClick={() => setSelectedCandidate(c)}
-                  className="px-3.5 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs font-semibold text-white border border-gray-700 transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-lg bg-[#FAF8F5] hover:bg-[#F3EFEA] text-xs font-semibold text-[#18181B] border border-[#DDD6CA] transition-colors cursor-pointer shadow-xs"
                 >
                   View Evidence
                 </button>
@@ -258,34 +258,34 @@ export function IndustryRecruiterDashboard({
           isOpen={!!selectedCandidate}
           onClose={() => setSelectedCandidate(null)}
           title={`Candidate Profile: ${selectedCandidate.student_name}`}
-          subtitle={`FR-40: Verified Skills, Evidence Chain & Gap Breakdown for ${selectedRole?.title || 'Selected Role'}`}
+          subtitle={`Verified Skills, Evidence Chain & Gap Breakdown for ${selectedRole?.title || 'Selected Role'}`}
           maxWidth="2xl"
         >
           <div className="space-y-5">
             {/* Quick stats */}
-            <div className="p-4 rounded-xl bg-gray-800/60 border border-gray-700 flex justify-between items-center">
+            <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E7E2D9] flex justify-between items-center">
               <div>
-                <span className="text-sm font-bold text-white">{selectedCandidate.student_name}</span>
-                <p className="text-xs text-gray-400">
+                <span className="text-sm font-bold text-[#18181B]">{selectedCandidate.student_name}</span>
+                <p className="text-xs text-[#78716C] mt-0.5">
                   {selectedCandidate.department} · {selectedCandidate.year} Batch · CGPA: {selectedCandidate.cgpa}
                 </p>
               </div>
               <div className="text-right">
-                <span className="text-xs text-gray-400 block">Role Match</span>
-                <span className="text-2xl font-black text-emerald-400">{selectedCandidate.match_score}%</span>
+                <span className="text-[10px] text-[#78716C] block font-mono uppercase">Role Match</span>
+                <span className="text-2xl font-black text-[#24482B]">{selectedCandidate.match_score}%</span>
               </div>
             </div>
 
             {/* Top Verified Skills */}
             <div>
-              <h5 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+              <h5 className="text-xs font-mono font-bold text-[#78716C] uppercase tracking-wider mb-2">
                 Demonstrated & Verified Proficiencies
               </h5>
               <div className="grid grid-cols-2 gap-2">
                 {selectedCandidate.top_verified_skills.map((ts, idx) => (
-                  <div key={idx} className="p-3 rounded-lg bg-gray-900 border border-gray-800 flex justify-between items-center text-xs">
-                    <span className="font-semibold text-white">{ts.name}</span>
-                    <span className="font-bold text-emerald-400">{ts.score}% (🟢 Verified)</span>
+                  <div key={idx} className="p-3 rounded-lg bg-[#FAF8F5] border border-[#E7E2D9] flex justify-between items-center text-xs">
+                    <span className="font-semibold text-[#18181B]">{ts.name}</span>
+                    <span className="font-bold text-[#24482B] font-mono">{ts.score}% (🟢 Verified)</span>
                   </div>
                 ))}
               </div>
@@ -293,29 +293,29 @@ export function IndustryRecruiterDashboard({
 
             {/* Critical Gaps for this Role */}
             {selectedCandidate.critical_gaps.length > 0 && (
-              <div className="p-3.5 rounded-xl bg-rose-950/20 border border-rose-500/30 text-xs space-y-1">
-                <div className="flex items-center gap-1.5 font-bold text-rose-400">
+              <div className="p-4 rounded-xl bg-[#FDF1EE] border border-[#F4CDC4] text-xs space-y-1">
+                <div className="flex items-center gap-1.5 font-bold text-[#B0432E]">
                   <AlertCircle className="w-4 h-4" />
                   <span>Identified Deficiencies for this Blueprint:</span>
                 </div>
-                <p className="text-gray-300">
+                <p className="text-[#57534E]">
                   {selectedCandidate.critical_gaps.join(', ')} fall below required benchmark thresholds.
                 </p>
               </div>
             )}
 
-            <div className="pt-3 border-t border-gray-800 flex justify-between items-center">
+            <div className="pt-3 border-t border-[#E7E2D9] flex justify-between items-center">
               <button
                 onClick={() => {
                   toggleShortlist(selectedCandidate.student_id);
                 }}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                   selectedCandidate.is_shortlisted
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                    : 'bg-indigo-600 text-white hover:bg-indigo-500'
+                    ? 'bg-[#FBF6EC] text-[#8A5C1E] border border-[#E9DFCE]'
+                    : 'bg-[#18181B] text-white hover:bg-[#2E2E33]'
                 }`}
               >
-                <Star className={`w-3.5 h-3.5 ${selectedCandidate.is_shortlisted ? 'fill-amber-400' : ''}`} />
+                <Star className={`w-3.5 h-3.5 ${selectedCandidate.is_shortlisted ? 'fill-[#B47D1C]' : ''}`} />
                 <span>{selectedCandidate.is_shortlisted ? 'Shortlisted Candidate ✓' : 'Shortlist Candidate'}</span>
               </button>
 
@@ -326,7 +326,7 @@ export function IndustryRecruiterDashboard({
                     setSelectedCandidate(null);
                     onInspectStudentDna(sid);
                   }}
-                  className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#D46238] hover:text-[#BC4E26] font-semibold cursor-pointer"
                 >
                   <span>Open Full Skill DNA in Student View</span>
                   <ExternalLink className="w-3.5 h-3.5" />

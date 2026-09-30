@@ -23,6 +23,7 @@ import { SkillHistoryChart } from '@/components/history/SkillHistoryChart';
 import { InternshipEvidenceCard } from '@/components/internship/InternshipEvidenceCard';
 import { InstitutionDashboard } from '@/components/institution/InstitutionDashboard';
 import { IndustryRecruiterDashboard } from '@/components/industry/IndustryRecruiterDashboard';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 export default function HomePage() {
   const { personas, currentUser, switchPersona, switchRole } = useAuth();
@@ -106,7 +107,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0b0f19] text-[#f9fafb]">
+    <div className="min-h-screen flex flex-col bg-[#F7F4EE] text-[#18181B]">
       {/* Top Navbar */}
       <Navbar
         currentUser={currentUser}
@@ -117,8 +118,69 @@ export default function HomePage() {
         onTabChange={tabId => setActiveTab(tabId)}
       />
 
-      {/* Main Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Hero Section inspired directly by reference design */}
+      <section className="border-b border-[#E7E2D9] bg-[#FAF8F5]/60 pt-10 pb-12 sm:pt-14 sm:pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Eyebrow Label */}
+          <div className="flex items-center gap-2 mb-6">
+            <span className="w-6 h-[1px] bg-[#78716C]"></span>
+            <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#78716C]">
+              FOR STUDENTS, ACADEMIA & INDUSTRY RECRUITERS
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Left Headline */}
+            <div className="lg:col-span-7">
+              <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-black tracking-tight text-[#18181B] leading-[1.08]">
+                Turn Static Resumes into Verifiable{' '}
+                <span className="hand-drawn-underline text-[#18181B]">
+                  Living Skill DNA.
+                </span>
+              </h1>
+            </div>
+
+            {/* Right Sub-paragraph & Actions */}
+            <div className="lg:col-span-5 space-y-5 lg:pt-1">
+              <p className="text-sm sm:text-base text-[#57534E] leading-relaxed">
+                Stop trusting inflated keyword claims. SkillTwin deterministically validates proficiencies through gap-prioritized assessments, rubric-clamped technical interviews, and mentor-verified internships.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <button
+                  onClick={() => setActiveTab('gaps')}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#18181B] text-white hover:bg-[#2E2E33] text-xs font-semibold shadow-xs transition-all cursor-pointer"
+                >
+                  <span>Analyze Skill Gaps</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setActiveTab('blueprint')}
+                  className="px-4 py-2.5 rounded-lg bg-white border border-[#DDD6CA] hover:bg-[#FAF8F5] text-[#18181B] text-xs font-semibold transition-all cursor-pointer shadow-xs"
+                >
+                  Role Blueprints
+                </button>
+                <button
+                  onClick={() => setIsTourOpen(true)}
+                  className="px-3.5 py-2.5 rounded-lg bg-[#FAF1EC] border border-[#F4CDC4] hover:bg-[#FBE9E2] text-[#D46238] text-xs font-semibold transition-all cursor-pointer inline-flex items-center gap-1.5"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>8-Step Demo Tour</span>
+                </button>
+              </div>
+
+              {/* Micro Kicker */}
+              <div className="pt-2 text-[10px] font-mono uppercase tracking-[0.16em] text-[#78716C]">
+                DETERMINISTIC EVALUATION · ZERO AI HALLUCINATIONS · FULL EVIDENCE AUDIT
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content Workspace */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         {/* TAB 1: Skill DNA Profile & Evidence */}
         {activeTab === 'dna' && (
           <div className="space-y-8 animate-in fade-in duration-200">
@@ -250,12 +312,16 @@ export default function HomePage() {
         onSwitchPersona={role => switchRole(role)}
       />
 
-      {/* Footer */}
-      <footer className="border-t border-gray-800/80 bg-gray-950/60 py-6 text-center text-xs text-gray-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <span>SkillTwin © 2026 · Evidence-Based Skill Intelligence Platform</span>
-          <span className="font-mono text-gray-400">
-            Deterministic Engine · Zero Pseudo-Science · Verifiable Evidence Chains
+      {/* Minimalist Editorial Footer */}
+      <footer className="border-t border-[#E7E2D9] bg-[#FAF8F5] py-8 text-xs text-[#78716C]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#D46238]"></span>
+            <span className="font-semibold text-[#18181B]">SkillTwin</span>
+            <span>© 2026 · Evidence-Based Skill Intelligence Platform</span>
+          </div>
+          <span className="font-mono text-[#78716C] text-[11px]">
+            DETERMINISTIC EVALUATION · ZERO PSEUDO-SCIENCE · VERIFIABLE EVIDENCE CHAINS
           </span>
         </div>
       </footer>

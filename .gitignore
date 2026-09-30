@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.db-journal
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/

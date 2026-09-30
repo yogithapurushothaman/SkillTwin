@@ -42,27 +42,29 @@ export function Modal({
   }[maxWidth];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className={`relative w-full ${maxWidthClasses} bg-gray-900 border border-gray-700/80 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col`}
+        className={`relative w-full ${maxWidthClasses} bg-white border border-[#E7E2D9] rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-[#18181B]`}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-start bg-gray-900/90">
+        <div className="px-6 py-4 border-b border-[#E7E2D9] flex justify-between items-start bg-[#FAF8F5]">
           <div>
-            <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>
-            {subtitle && <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>}
+            <h3 className="text-base font-bold text-[#18181B] tracking-tight">{title}</h3>
+            {subtitle && <p className="text-xs text-[#78716C] mt-0.5">{subtitle}</p>}
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+            className="p-1 rounded-lg text-[#78716C] hover:text-[#18181B] hover:bg-[#EAE4D9] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto flex-1">{children}</div>
+        {/* Content Body */}
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)] bg-white">
+          {children}
+        </div>
       </div>
     </div>
   );
