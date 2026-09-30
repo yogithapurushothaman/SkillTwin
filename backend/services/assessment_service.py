@@ -128,120 +128,124 @@ def grade_assessment_submission(
     # (topic, skill_name) -> {"total_q": int, "correct_q": int, "marks_earned": float, "marks_total": float}
     topic_stats: Dict[Tuple[str, str], Dict[str, Any]] = {}
 
-    for ans in answers:
-        q_id = ans["question_id"]
-        chosen = ans["selected_option_id"].strip().upper()
-        
-        q = db.query(Question).filter(Question.id == q_id).first()
-        if not q:
-            continue
+    try:
+        for ans in answers:
+            q_id = ans.get("question_id")
+            chosen = str(ans.get("selected_option_id", "")).strip().upper()
             
-        is_correct = (chosen == q.correct_answer.strip().upper())
-        marks_awarded = float(q.marks) if is_correct else 0.0
-        
-        total_marks_earned += marks_awarded
-        total_marks_possible += float(q.marks)
-        
-        # Save record
-        db_answer = AssessmentAnswer(
-            assessment_id=assessment_id,
-            question_id=q.id,
-            selected_option=chosen,
-            is_correct=is_correct,
-            score_awarded=marks_awarded
-        )
-        db.add(db_answer)
-        
-        # Aggregate skill stats
-        if q.skill_id not in skill_stats:
-            skill_stats[q.skill_id] = {
-                "total": 0.0, 
-                "earned": 0.0, 
-                "name": q.skill.name if q.skill else "Skill"
-            }
-        skill_stats[q.skill_id]["total"] += float(q.marks)
-        skill_stats[q.skill_id]["earned"] += marks_awarded
-        
-        # Aggregate topic stats
-        key = (q.topic, q.skill.name if q.skill else "General")
-        if key not in topic_stats:
-            topic_stats[key] = {
-                "total_q": 0,
-                "correct_q": 0,
-                "marks_earned": 0.0,
-                "marks_total": 0.0
-            }
-        topic_stats[key]["total_q"] += 1
-        if is_correct:
-            topic_stats[key]["correct_q"] += 1
-        topic_stats[key]["marks_earned"] += marks_awarded
-        topic_stats[key]["marks_total"] += float(q.marks)
-
-    # Finalize Assessment
-    assessment.total_score = total_marks_earned
-    assessment.max_score = total_marks_possible if total_marks_possible > 0 else 100.0
-    assessment.status = "completed"
-    db.commit()
-
-    overall_pct = round((total_marks_earned / assessment.max_score) * 100.0, 1) if assessment.max_score > 0 else 0.0
-
-    # Format topic scores (FR-23)
-    topic_scores_list: List[TopicScore] = []
-    for (t_name, s_name), t_data in topic_stats.items():
-        t_pct = round((t_data["marks_earned"] / t_data["marks_total"]) * 100.0, 1) if t_data["marks_total"] > 0 else 0.0
-        topic_scores_list.append(TopicScore(
-            topic=t_name,
-            skill_name=s_name,
-            score=t_pct,
-            total_questions=t_data["total_q"],
-            correct_questions=t_data["correct_q"]
-        ))
-
-    # Update skills & generate verifiable evidence (FR-12, FR-13, FR-32)
-    skill_updates: List[Dict[str, Any]] = []
-    for skill_id, s_data in skill_stats.items():
-        if s_data["total"] > 0:
-            assessed_score = round((s_data["earned"] / s_data["total"]) * 100.0, 1)
+            q = db.query(Question).filter(Question.id == q_id).first()
+            if not q:
+                continue
+                
+            is_correct = (chosen == q.correct_answer.strip().upper())
+            marks_awarded = float(q.marks) if is_correct else 0.0
             
-            details = {
-                "assessment_id": assessment_id,
-                "marks_earned": s_data["earned"],
-                "marks_total": s_data["total"],
-                "topics_tested": [t.topic for t in topic_scores_list if t.skill_name == s_data["name"]]
-            }
+            total_marks_earned += marks_awarded
+            total_marks_possible += float(q.marks)
             
-            old_score, new_score = record_skill_evidence_and_update(
-                db=db,
-                student_id=student_id,
-                skill_id=skill_id,
-                source="assessment",
-                score=assessed_score,
-                details_json=json.dumps(details),
-                ai_assisted=False,
-                change_reason=f"Online Assessment #{assessment_id} Completed"
+            # Save record
+            db_answer = AssessmentAnswer(
+                assessment_id=assessment_id,
+                question_id=q.id,
+                selected_option=chosen,
+                is_correct=is_correct,
+                score_awarded=marks_awarded
             )
+            db.add(db_answer)
             
-            skill_updates.append({
-                "skill_id": skill_id,
-                "skill_name": s_data["name"],
-                "assessed_score": assessed_score,
-                "old_score": old_score,
-                "new_score": new_score,
-                "improvement": round(new_score - old_score, 1)
-            })
+            # Aggregate skill stats
+            if q.skill_id not in skill_stats:
+                skill_stats[q.skill_id] = {
+                    "total": 0.0, 
+                    "earned": 0.0, 
+                    "name": q.skill.name if q.skill else "Skill"
+                }
+            skill_stats[q.skill_id]["total"] += float(q.marks)
+            skill_stats[q.skill_id]["earned"] += marks_awarded
+            
+            # Aggregate topic stats
+            key = (q.topic, q.skill.name if q.skill else "General")
+            if key not in topic_stats:
+                topic_stats[key] = {
+                    "total_q": 0,
+                    "correct_q": 0,
+                    "marks_earned": 0.0,
+                    "marks_total": 0.0
+                }
+            topic_stats[key]["total_q"] += 1
+            if is_correct:
+                topic_stats[key]["correct_q"] += 1
+            topic_stats[key]["marks_earned"] += marks_awarded
+            topic_stats[key]["marks_total"] += float(q.marks)
 
-    feedback = (
-        f"You scored {overall_pct}% ({total_marks_earned}/{assessment.max_score} marks). "
-        f"Evidence recorded for {len(skill_updates)} skills. Your Skill DNA and Role Match have been updated."
-    )
+        # Finalize Assessment
+        assessment.total_score = total_marks_earned
+        assessment.max_score = total_marks_possible if total_marks_possible > 0 else 100.0
+        assessment.status = "completed"
+        db.commit()
 
-    return AssessmentResultResponse(
-        assessment_id=assessment_id,
-        student_id=student_id,
-        total_score=total_marks_earned,
-        max_score=assessment.max_score,
-        percentage=overall_pct,
-        topic_scores=topic_scores_list,
-        skill_updates=skill_updates,
-        feedback=feedback
-    )
+        overall_pct = round((total_marks_earned / assessment.max_score) * 100.0, 1) if assessment.max_score > 0 else 0.0
+
+        # Format topic scores (FR-23)
+        topic_scores_list: List[TopicScore] = []
+        for (t_name, s_name), t_data in topic_stats.items():
+            t_pct = round((t_data["marks_earned"] / t_data["marks_total"]) * 100.0, 1) if t_data["marks_total"] > 0 else 0.0
+            topic_scores_list.append(TopicScore(
+                topic=t_name,
+                skill_name=s_name,
+                score=t_pct,
+                total_questions=t_data["total_q"],
+                correct_questions=t_data["correct_q"]
+            ))
+
+        # Update skills & generate verifiable evidence (FR-12, FR-13, FR-32)
+        skill_updates: List[Dict[str, Any]] = []
+        for skill_id, s_data in skill_stats.items():
+            if s_data["total"] > 0:
+                assessed_score = round((s_data["earned"] / s_data["total"]) * 100.0, 1)
+                
+                details = {
+                    "assessment_id": assessment_id,
+                    "marks_earned": s_data["earned"],
+                    "marks_total": s_data["total"],
+                    "topics_tested": [t.topic for t in topic_scores_list if t.skill_name == s_data["name"]]
+                }
+                
+                old_score, new_score = record_skill_evidence_and_update(
+                    db=db,
+                    student_id=student_id,
+                    skill_id=skill_id,
+                    source="assessment",
+                    score=assessed_score,
+                    details_json=json.dumps(details),
+                    ai_assisted=False,
+                    change_reason=f"Online Assessment #{assessment_id} Completed"
+                )
+                
+                skill_updates.append({
+                    "skill_id": skill_id,
+                    "skill_name": s_data["name"],
+                    "assessed_score": assessed_score,
+                    "old_score": old_score,
+                    "new_score": new_score,
+                    "improvement": round(new_score - old_score, 1)
+                })
+
+        feedback = (
+            f"You scored {overall_pct}% ({total_marks_earned}/{assessment.max_score} marks). "
+            f"Evidence recorded for {len(skill_updates)} skills. Your Skill DNA and Role Match have been updated."
+        )
+
+        return AssessmentResultResponse(
+            assessment_id=assessment_id,
+            student_id=student_id,
+            total_score=total_marks_earned,
+            max_score=assessment.max_score,
+            percentage=overall_pct,
+            topic_scores=topic_scores_list,
+            skill_updates=skill_updates,
+            feedback=feedback
+        )
+    except Exception as e:
+        db.rollback()
+        raise e

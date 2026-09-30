@@ -23,13 +23,31 @@ from models.db_models import (
     AssessmentAnswer,
     Interview,
     Internship,
-    SkillHistory
+    SkillHistory,
+    ShortlistedCandidate
 )
 from services.skill_dictionary import CANONICAL_SKILLS
 
-def seed_database(db: Session):
-    # Check if already seeded
-    if db.query(Skill).first():
+def seed_database(db: Session, force_reset: bool = False):
+    # Check if already seeded unless force_reset
+    if force_reset:
+        print("Resetting and reseeding database...")
+        db.query(AssessmentAnswer).delete()
+        db.query(Assessment).delete()
+        db.query(Interview).delete()
+        db.query(Internship).delete()
+        db.query(SkillHistory).delete()
+        db.query(SkillEvidence).delete()
+        db.query(ShortlistedCandidate).delete()
+        db.query(StudentSkill).delete()
+        db.query(RoleSkill).delete()
+        db.query(Question).delete()
+        db.query(IndustryRole).delete()
+        db.query(Student).delete()
+        db.query(User).delete()
+        db.query(Skill).delete()
+        db.commit()
+    elif db.query(Skill).first():
         print("Database already seeded.")
         return
 

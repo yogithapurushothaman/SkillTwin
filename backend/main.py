@@ -71,6 +71,15 @@ def root():
 def health_check():
     return {"status": "healthy"}
 
+@app.post("/api/dev/reset-database")
+def reset_database_endpoint():
+    db = SessionLocal()
+    try:
+        seed_database(db, force_reset=True)
+        return {"status": "success", "message": "Database reset and re-seeded successfully."}
+    finally:
+        db.close()
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

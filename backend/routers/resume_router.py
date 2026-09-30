@@ -48,62 +48,69 @@ def confirm_extracted_skills(
     skills_to_save = data.get("skills", [])
     updated_skills_count = 0
 
-    for item in skills_to_save:
-        s_name = item.get("normalized_name")
-        claimed_level = item.get("claimed_level", "Intermediate")
-        provisional_score = float(item.get("claimed_score", 60.0))
+    try:
+        for item in skills_to_save:
+            s_name = item.get("normalized_name")
+            claimed_level = item.get("claimed_level", "Intermediate")
+            provisional_score = float(item.get("claimed_score", 60.0))
 
-        # Check dictionary
-        skill = db.query(Skill).filter(Skill.name == s_name).first()
-        if not skill:
-            continue
+            # Check dictionary
+            skill = db.query(Skill).filter(Skill.name == s_name).first()
+            if not skill:
+                continue
 
-        # Check existing student skill
-        ss = db.query(StudentSkill).filter(
-            StudentSkill.student_id == student_id,
-            StudentSkill.skill_id == skill.id
-        ).first()
+            # Check existing student skill
+            ss = db.query(StudentSkill).filter(
+                StudentSkill.student_id == student_id,
+                StudentSkill.skill_id == skill.id
+            ).first()
 
-        if ss:
-            ss.claimed_score = provisional_score
-            # If not yet verified, keep score at provisional
-            if ss.verification_status != "verified":
-                ss.score = provisional_score
-                ss.verification_status = "self_declared"
-            ss.updated_at = datetime.datetime.utcnow()
-        else:
-            ss = StudentSkill(
+            old_score = 0.0
+            if ss:
+                old_score = ss.score
+                ss.claimed_score = provisional_score
+                # If not yet verified, keep score at provisional
+                if ss.verification_status != "verified":
+                    ss.score = provisional_score
+                    ss.verification_status = "self_declared"
+                ss.updated_at = datetime.datetime.utcnow()
+            else:
+                ss = StudentSkill(
+                    student_id=student_id,
+                    skill_id=skill.id,
+                    score=provisional_score,
+                    claimed_score=provisional_score,
+                    verification_status="self_declared"
+                )
+                db.add(ss)
+
+            # Record resume evidence
+            db.add(SkillEvidence(
                 student_id=student_id,
                 skill_id=skill.id,
+                source="resume",
                 score=provisional_score,
-                claimed_score=provisional_score,
-                verification_status="self_declared"
-            )
-            db.add(ss)
+                details_json=json.dumps({"claimed_level": claimed_level}),
+                ai_assisted=False,
+                created_at=datetime.datetime.utcnow()
+            ))
 
-        # Record resume evidence
-        db.add(SkillEvidence(
-            student_id=student_id,
-            skill_id=skill.id,
-            source="resume",
-            score=provisional_score,
-            details_json=json.dumps({"claimed_level": claimed_level}),
-            ai_assisted=False,
-            created_at=datetime.datetime.utcnow()
-        ))
+            # Record history
+            db.add(SkillHistory(
+                student_id=student_id,
+                skill_id=skill.id,
+                old_score=old_score,
+                new_score=provisional_score,
+                change_reason="Resume Skill Extraction Confirmed (Self-Declared)",
+                created_at=datetime.datetime.utcnow()
+            ))
+            updated_skills_count += 1
 
-        # Record history
-        db.add(SkillHistory(
-            student_id=student_id,
-            skill_id=skill.id,
-            old_score=0.0,
-            new_score=provisional_score,
-            change_reason="Resume Skill Extraction Confirmed (Self-Declared)",
-            created_at=datetime.datetime.utcnow()
-        ))
-        updated_skills_count += 1
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Failed to confirm skills: {str(e)}")
 
-    db.commit()
     return {
         "status": "success",
         "message": f"Successfully mapped and saved {updated_skills_count} skills to SkillTwin as Self-Declared."

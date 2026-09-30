@@ -176,6 +176,7 @@ class SkillHistory(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     student = relationship("Student", back_populates="history")
+    skill = relationship("Skill")
 
 class ShortlistedCandidate(Base):
     __tablename__ = "shortlisted_candidates"
